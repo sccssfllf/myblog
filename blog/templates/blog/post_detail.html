@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{ post.title }}
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container">
+        <article class="mt-4">
+            <h2>{{ post.title }}</h2>
+            <p class="text-muted">
+                Published: {{ post.published_date|date:"d M Y H:i"}} | Author {{ post.author }}
+            </p>
+
+            <div class="mb-4">
+                {{ post.contetnt|linebreaks }}
+            </div>
+
+            <a href="{% url 'post_list' %}" class="btn btn-secondary">&larr; Back to list</a>
+        </article>
+    </div>
+{% endblock content %}

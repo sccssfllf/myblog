@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    All Posts
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Last Publications</h2>
+
+    {% if posts %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+            {% for post in posts %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-primary">
+                                    {{ post.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted mb-1">
+                                Published: {{ post.published_date|date:"d M y"}} | Author: {{ post.author }}
+                            </p>
+                            <p class="card-text">{{ post.contetnt|truncatewords:25 }}</p>
+                        </div>
+                        <div class="card-footer text-end bg-white border-top-0">
+                            <a href="{% url 'post_detail' post.slug %}" class="btn btn-sm btn-outline-primary">Read more...</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <p>There's no posts yet.</p>
+    {% endif %}
+
+</div>
+{% endblock content %}
