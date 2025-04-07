@@ -23,6 +23,20 @@
                 <a href="{% url 'post_edit' post.slug %}" class="btn btn-warning btn-secondary">✏️ Edit</a>
                 <a href="{% url 'post_delete' post.slug %}" class="btn btn-danger btn-secondary">🗑️ Delete</a>
             {% endif %}
+
+            <div class="d-flex align-items-center gap-3">
+                <button id="like-button" class="btn btn-outline-danger">
+                    ❤️ <span id="like-count">{{ post.likes.count }}</span>
+                </button>
+
+                <div>
+                    <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank">Telegram</a> |
+                    <a href="https://twitter.com/share?url={{ request.build_absolute_uri }}" target="_blank">X</a> |
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">Facebook</a>
+                </div>
+            </div>
         </article>
     </div>
 {% endblock content %}
+
+{% block scripts %}{% endblock scripts %}

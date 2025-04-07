@@ -16,7 +16,8 @@ class ModelPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     published = models.BooleanField(default=False)
     published_date = models.DateTimeField(null=True, blank=True)
-
+    likes = models.ManyToManyField(
+        'auth.User', related_name='liked_posts', blank=True)
     # For the future:
     views = models.PositiveBigIntegerField(default=0)  # Views count
     # Temporarily str, later will be replaced with TaggableManager

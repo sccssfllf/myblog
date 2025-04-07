@@ -1,9 +1,13 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from .models import ModelPost
 from .forms import PostForm
+
 
 # Create your views here.
 
@@ -44,3 +48,17 @@ class PostDeleteView(DeleteView):
     model = ModelPost
     template_name = 'blog/post_confirm_delete.html'
     success_url = reverse_lazy('post_list')
+
+
+@require_POST
+@login_required
+def post_like(request, slug):
+    post = get_object_or_404(ModelPost, slug)
+    user = request.user
+
+    if user in post.likes.all():
+        post.likes.remove(user)
+    else:
+        post.likes.add(user)
+
+    return JsonResponse({'likes': post.likes.count()})
