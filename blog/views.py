@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from .models import ModelPost
 from .forms import PostForm
 
@@ -20,6 +21,9 @@ class PostDetailView(DetailView):
     model = ModelPost
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
+
+    def get_post(self):
+        return get_object_or_404(ModelPost, slug=self.kwargs['slug'])
 
 
 class PostCreateView(CreateView):
