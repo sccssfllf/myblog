@@ -39,4 +39,25 @@
     </div>
 {% endblock content %}
 
-{% block scripts %}{% endblock scripts %}
+{% block scripts %}
+<script>
+    const likeBtn = document.getElementById("like-button");
+    const likeCount = document.getElementById("like-count");
+
+    likeBtn.addEventListener("click", async () => {
+        const response = await fetch("{% url 'post_like' post.slug %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        });
+
+        const data = await response.json();
+        likeCount.textContent = data.likes;
+
+        likeBtn.classList.toggle("btn-danger");
+        likeBtn.classList.toggle("btn-outline-danger");
+    });
+</script>
+{% endblock scripts %}
